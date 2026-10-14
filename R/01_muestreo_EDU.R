@@ -6,11 +6,17 @@
 # Procedimiento (sección 6.3 del enunciado):
 #   1. Lee los lotes exportados desde WoS (texto plano, registro completo).
 #   2. Deduplica el universo por UT.
-#   3. Verifica los criterios de delimitación (sección 4).
+#   3. Excluye los registros Article; Review y los fuera de rango (PY o idioma),
+#      contándolos aparte, y verifica los criterios de delimitación (sección 4).
 #   4. Elimina los registros compartidos con Salud y Computación/Ingeniería.
 #   5. Genera un orden aleatorio completo del universo con set.seed(2026).
 #   6. Calcula la asignación proporcional de n = 300 por año (estrato).
 #   7. Exporta la lista ordenada y los conteos para el diagrama de flujo.
+#
+# Salidas (carpeta output/): lista_ordenada_EDU.csv, cuotas_EDU.csv,
+#   flujo_EDU.csv, lotes_EDU.csv y sessionInfo_EDU.txt.
+# La columna A08_sugerido reparte las posiciones de cada estrato: impares a
+# MSC (Martín Soto Cabezas) y pares a JPM (Juan Pablo Maureira Sanhueza).
 #
 # Solo usa R base. Ejecutar desde la raíz del proyecto:
 #   Rscript R/01_muestreo_EDU.R
@@ -77,8 +83,31 @@ lotes_rep <- names(firma)[duplicated(firma)]
 # ---- 2. Deduplicación por UT -------------------------------------------------
 univ <- bruto[!duplicated(bruto$UT), ]
 univ$PY <- as.integer(univ$PY)
+n_unicos <- nrow(univ)
+py_unicos <- univ$PY
 
-# ---- 3. Verificación de criterios (sección 4) -------------------------------
+# ---- 3. Exclusiones del protocolo y verificación de criterios (sección 4) ---
+# Article; Review se excluye; los registros fuera de rango (PY distinto de
+# 2025-2026, sin PY o idioma distinto de inglés/español) se cuentan aparte.
+es_review   <- grepl("Review", univ$DT)
+fuera_rango <- !(univ$PY %in% 2025:2026) | !(univ$LA %in% c("English", "Spanish"))
+n_review <- sum(es_review)
+n_fuera  <- sum(!es_review & fuera_rango)
+n_sin_PY <- sum(is.na(univ$PY))
+univ <- univ[!es_review & !fuera_rango, ]
+
+# Conteos informativos del universo WoS (antes de quitar compartidos)
+n_SCIE <- c(sum(grepl("Science Citation Index Expanded", univ$WE)),
+            sum(grepl("Science Citation Index Expanded", univ$WE) & univ$PY == 2025),
+            sum(grepl("Science Citation Index Expanded", univ$WE) & univ$PY == 2026))
+n_SSCI <- c(sum(grepl("Social Science Citation Index", univ$WE)),
+            sum(grepl("Social Science Citation Index", univ$WE) & univ$PY == 2025),
+            sum(grepl("Social Science Citation Index", univ$WE) & univ$PY == 2026))
+n_ESCI <- c(sum(grepl("Emerging Sources Citation Index", univ$WE)),
+            sum(grepl("Emerging Sources Citation Index", univ$WE) & univ$PY == 2025),
+            sum(grepl("Emerging Sources Citation Index", univ$WE) & univ$PY == 2026))
+es_EA <- !is.na(univ$EA) & nzchar(univ$EA)      # registros Early Access
+
 cats <- strsplit(univ$WC, "; ")
 tiene <- function(lista) vapply(cats, function(c) any(c %in% lista), logical(1))
 
@@ -115,12 +144,13 @@ edu$proceedings <- grepl("Proceedings Paper", edu$DT)
 
 # ---- 5. Orden aleatorio completo con semilla fija ---------------------------
 RNGkind(kind = "Mersenne-Twister", normal.kind = "Inversion", sample.kind = "Rejection")
-edu <- edu[order(edu$UT), ]          # orden base reproducible, independiente de los lotes
+edu <- edu[order(edu$UT, method = "radix"), ]  # orden base reproducible (independiente de lotes y de la configuración regional)
 set.seed(semilla)
 edu <- edu[sample.int(nrow(edu)), ]
 edu$A03 <- seq_len(nrow(edu))        # posición aleatoria global
 edu$A04 <- edu$PY                    # estrato = año de publicación
 edu$pos_estrato <- ave(edu$A03, edu$A04, FUN = seq_along)
+edu$A08_sugerido <- ifelse(edu$pos_estrato %% 2 == 1, "MSC", "JPM")  # impares MSC, pares JPM (sección 7 del protocolo)
 
 # ---- 6. Asignación proporcional por estrato ---------------------------------
 N_h <- table(edu$A04)
@@ -137,36 +167,61 @@ asignacion <- data.frame(estrato = names(N_h), N_h = as.integer(N_h),
 print(asignacion)
 
 # ---- 7. Salidas --------------------------------------------------------------
-lista <- edu[, c("A03", "A04", "pos_estrato", "UT", "DI", "TI", "SO", "SN", "EI",
+lista <- edu[, c("A03", "A04", "pos_estrato", "A08_sugerido", "UT", "DI", "TI", "SO", "SN", "EI",
                  "PU", "WE", "WC", "LA", "OA", "DT", "retractado", "proceedings")]
-names(lista) <- c("A03_posicion", "A04_estrato", "posicion_estrato", "B01_UT", "B02_DOI",
+names(lista) <- c("A03_posicion", "A04_estrato", "posicion_estrato", "A08_sugerido", "B01_UT", "B02_DOI",
                   "B03_titulo", "B07_revista", "ISSN", "eISSN", "editorial_WoS",
                   "indice_WoS", "B11_categorias_WoS", "idioma", "acceso_abierto_WoS",
                   "tipo_documento", "marca_retractado", "marca_proceedings")
 write.csv(lista, file.path(dir_out, "lista_ordenada_EDU.csv"),
           row.names = FALSE, fileEncoding = "UTF-8", na = "")
-write.csv(asignacion, file.path(dir_out, "asignacion_EDU.csv"), row.names = FALSE)
+write.csv(asignacion, file.path(dir_out, "cuotas_EDU.csv"), row.names = FALSE)
 
-flujo <- c(
-  sprintf("Fecha de ejecución del script: %s", format(Sys.time(), "%Y-%m-%d %H:%M")),
-  sprintf("Lotes leídos: %d", length(lotes)),
-  sprintf("Lotes repetidos detectados: %d %s", length(lotes_rep), paste(lotes_rep, collapse = ", ")),
-  sprintf("Registros leídos: %d", nrow(bruto)),
-  sprintf("Registros únicos por UT (universo WoS): %d", nrow(univ)),
-  sprintf("  2025: %d | 2026: %d", sum(univ$PY == 2025), sum(univ$PY == 2026)),
-  sprintf("Compartidos con Salud: %d", sum(univ$comparte_SAL)),
-  sprintf("Compartidos con Computación/Ingeniería: %d", sum(univ$comparte_CIN)),
-  sprintf("Compartidos con ambas: %d", sum(univ$comparte_SAL & univ$comparte_CIN)),
-  sprintf("Compartidos solo por cruce de UT: %d", sum(univ$comparte_UT & !univ$comparte_SAL & !univ$comparte_CIN)),
-  sprintf("Total eliminados por compartidos: %d", sum(univ$compartido)),
-  sprintf("Universo exclusivo de Educación: %d", nrow(edu)),
-  sprintf("  2025: %d | 2026: %d", N_h[["2025"]], N_h[["2026"]]),
-  sprintf("  Marcados como retractados (E4 al revisar): %d", sum(edu$retractado)),
-  sprintf("  Marcados como Proceedings Paper: %d", sum(edu$proceedings)),
-  sprintf("Asignación n = %d: 2025 = %d | 2026 = %d", n_muestra, n_h[["2025"]], n_h[["2026"]]),
-  sprintf("Semilla: set.seed(%d); RNGkind: %s", semilla, paste(RNGkind(), collapse = ", "))
+# Registro de lotes: respalda el control "suma de lotes = N del registro de búsqueda".
+# El orden sigue el número del nombre del archivo; no prueba por sí solo que los
+# rangos exportados de WoS sean consecutivos (eso lo respalda el registro de búsqueda).
+reg_lote <- as.integer(table(factor(bruto$archivo, levels = basename(lotes))))
+fecha_lote <- tapply(bruto$DA, factor(bruto$archivo, levels = basename(lotes)),
+                     function(x) paste(sort(unique(x)), collapse = "/"))
+lotes_tab <- data.frame(orden = seq_along(lotes), archivo = basename(lotes),
+                        registros = reg_lote,
+                        fecha_exportacion_DA = as.character(fecha_lote),
+                        md5 = as.character(tools::md5sum(lotes)))
+write.csv(lotes_tab, file.path(dir_out, "lotes_EDU.csv"), row.names = FALSE, fileEncoding = "UTF-8")
+
+# Conteos para el diagrama de flujo (una fila por paso)
+fila <- function(paso, N, n25 = NA, n26 = NA) data.frame(paso = paso, N = N, N_2025 = n25, N_2026 = n26)
+py_ok <- function(x) c(sum(x == 2025, na.rm = TRUE), sum(x == 2026, na.rm = TRUE))
+flujo <- rbind(
+  fila("lotes_leidos", length(lotes)),
+  fila("lotes_identicos_detectados", length(lotes_rep)),
+  fila("registros_leidos", nrow(bruto)),
+  fila("registros_unicos_por_UT", n_unicos, py_ok(py_unicos)[1], py_ok(py_unicos)[2]),
+  fila("excluidos_Article_Review", n_review),
+  fila("excluidos_fuera_de_rango_PY_o_idioma", n_fuera),
+  fila("registros_sin_PY", n_sin_PY),
+  fila("universo_WoS_tras_criterios", nrow(univ), py_ok(univ$PY)[1], py_ok(univ$PY)[2]),
+  fila("informativo_indice_SCIE", n_SCIE[1], n_SCIE[2], n_SCIE[3]),
+  fila("informativo_indice_SSCI", n_SSCI[1], n_SSCI[2], n_SSCI[3]),
+  fila("informativo_indice_ESCI", n_ESCI[1], n_ESCI[2], n_ESCI[3]),
+  fila("informativo_Early_Access", sum(es_EA), sum(es_EA & univ$PY == 2025), sum(es_EA & univ$PY == 2026)),
+  fila("compartidos_con_Salud", sum(univ$comparte_SAL)),
+  fila("compartidos_con_Computacion_Ingenieria", sum(univ$comparte_CIN)),
+  fila("compartidos_con_ambas", sum(univ$comparte_SAL & univ$comparte_CIN)),
+  fila("compartidos_solo_por_cruce_UT", sum(univ$comparte_UT & !univ$comparte_SAL & !univ$comparte_CIN)),
+  fila("total_eliminados_por_compartidos", sum(univ$compartido),
+       py_ok(univ$PY[univ$compartido])[1], py_ok(univ$PY[univ$compartido])[2]),
+  fila("universo_exclusivo_Educacion", nrow(edu), N_h[["2025"]], N_h[["2026"]]),
+  fila("informativo_marcados_retractados_E4", sum(edu$retractado)),
+  fila("informativo_marcados_Proceedings_Paper", sum(edu$proceedings)),
+  fila("muestra_n_asignada", n_muestra, n_h[["2025"]], n_h[["2026"]]),
+  fila("semilla", semilla)
 )
-writeLines(flujo, file.path(dir_out, "flujo_EDU.txt"))
-cat(flujo, sep = "\n")
+write.csv(flujo, file.path(dir_out, "flujo_EDU.csv"), row.names = FALSE, fileEncoding = "UTF-8")
+print(flujo, row.names = FALSE)
 
-writeLines(capture.output(sessionInfo()), file.path(dir_out, "sessionInfo_01_muestreo.txt"))
+writeLines(c(sprintf("Fecha de ejecución del script: %s", format(Sys.time(), "%Y-%m-%d %H:%M")),
+             sprintf("RNGkind: %s", paste(RNGkind(), collapse = ", ")),
+             "",
+             capture.output(sessionInfo())),
+           file.path(dir_out, "sessionInfo_EDU.txt"))
