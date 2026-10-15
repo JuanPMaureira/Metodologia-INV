@@ -9,7 +9,7 @@ Las entregas y sus semanas vienen de la sección 11 del enunciado.
 
 | Entrega | Semana | Peso | Estado |
 |---|---|---|---|
-| E1. Protocolo y muestra | 1 | 10 % | En curso: faltan el protocolo final y datos del registro de búsqueda |
+| E1. Protocolo y muestra | 1 | 10 % | En curso: faltan el protocolo final y la consulta exacta y el N por año del registro de búsqueda |
 | E2. Calibración | 2 | 15 % | En curso: selección de los 20 artículos lista; falta la codificación independiente |
 | E3. Base componente A | 5 | 20 % | No iniciada (hay trabajo previo de descarga de textos) |
 | E4. Base componente B | 6 | 10 % | No iniciada |
@@ -20,8 +20,8 @@ Las entregas y sus semanas vienen de la sección 11 del enunciado.
 
 | Resultado | Archivo | Estado | Última actualización |
 |---|---|---|---|
-| Protocolo del área (v1.0) | Documento de Word de Martín; aún no está en el repositorio (`docs/protocolo_E1.pdf` por crear) | Incompleto: roles y coordinador de datos por definir; declaración de IA por actualizar | 2026-10-15 |
-| Registro de búsqueda | `docs/registro_busqueda_EDU.md` | Parcial: fecha (8 oct) y N total (91.185) listos; faltan hora, consulta exacta, ajustes de sintaxis, responsable y N por año de WoS | 2026-10-15 |
+| Protocolo del área (v1.0) | Documento de Word de Martín; aún no está en el repositorio (`docs/protocolo_E1.pdf` por crear) | Incompleto: roles y coordinador de datos definidos en `bitacora_decisiones.md` (falta pasarlos al documento); declaración de IA por actualizar | 2026-10-15 |
+| Registro de búsqueda | `docs/registro_busqueda_EDU.md` | Parcial: fecha y hora (8 oct, 21:54), responsable (Martín) y N total (91.185) listos; faltan consulta exacta, ajustes de sintaxis y N por año de WoS | 2026-10-15 |
 | Universo exportado | `data/raw/wos_edu/savedrecs*.txt` (92 lotes) y `output/lotes_EDU.csv` | Listo: 91.185 registros únicos | 2026-10-14 |
 | Script de muestreo | `R/01_muestreo_EDU.R` | Listo | 2026-10-14 |
 | Lista ordenada | `output/lista_ordenada_EDU.csv` (85.611 filas) | Listo | 2026-10-14 |
@@ -77,6 +77,7 @@ Contenido esperado: base completa y validada, submuestra de doble codificación 
 
 | Fecha | Cambio | Quién |
 |---|---|---|
+| 2026-10-15 | Se definen los roles del equipo (Martín: coordinador de datos) y se registran la hora de descarga (21:54) y el responsable en el registro de búsqueda. | JPM con Claude |
 | 2026-10-15 | Se agrega la selección de los 20 artículos de calibración (E2) y su script. | JPM con Claude |
 | 2026-10-15 | Se crea esta bitácora. Se agregan fecha de búsqueda (8 oct) y N de WoS (91.185) al registro de búsqueda. | JPM con Claude |
 | 2026-10-14 | Se ajustan los nombres de archivos al protocolo, se amplía el script de muestreo y se crean README, registro de búsqueda y bitácora de decisiones. | JPM con Claude |
