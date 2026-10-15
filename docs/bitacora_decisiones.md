@@ -62,3 +62,16 @@ Ambos son codificadores (la codificación de los componentes A y B es humana, se
 **Hora de descarga.** Martín terminó de descargar las bases el 8 de octubre de 2026 a las 21:54 (hora de Chile). Esa hora queda en el registro de búsqueda como hora de la descarga.
 
 **Pendiente:** el rol de JPM es una propuesta redactada a partir del trabajo realizado; confirmarlo entre ambos. Copiar esta tabla a la sección 1 del documento del protocolo (Word de Martín).
+
+## F. Protocolo v1.1
+
+Fecha: 2026-10-15. El protocolo pasa de la versión 1.0 (Word de Martín, 7 de octubre) a la 1.1, guardada en `docs/protocolo_E1.docx` y `docs/protocolo_E1.pdf`. Incorpora:
+
+- Sección 1: roles de MSC y JPM, coordinador de datos y roles CRediT (sección E de esta bitácora).
+- Secciones 3 y 8: resultados de la verificación de sintaxis (sección A) y estado de las decisiones abiertas (sección B).
+- Sección 4: hora de descarga (21:54), responsable, N total y por edición, y lotes.
+- Secciones 5 y 6: nombres de los lotes tal como los entrega WoS y salidas del script (`lotes_EDU.csv`, `A08_sugerido`) (sección C, puntos 1 a 3).
+- Sección 9: estructura real del repositorio y checklist al día (sección C, punto 4).
+- Sección 10: declaración de IA con las herramientas y versiones usadas (sección C, punto 5).
+
+**Pendiente:** confirmar con Martín las versiones de IA de la sección 10 (el borrador v1.0 nombraba Claude Opus 5.5; en las actualizaciones de octubre se usó claude-sonnet-5-5), actualizar esa sección si se usa IA en la codificación de contraste, y pasar el repositorio a privado.
