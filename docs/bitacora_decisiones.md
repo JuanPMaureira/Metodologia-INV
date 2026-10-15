@@ -34,3 +34,31 @@ Fecha: 2026-10-14. Los cambios ajustan el texto a lo que ya se hizo en el reposi
 3. **Sección 6, pasos 3 y 4.** El script ahora excluye y cuenta aparte los `Article; Review` y los registros fuera de rango (PY o idioma). En esta exportación ambos conteos son 0.
 4. **Sección 9, estructura del repositorio.** El repositorio incluye `docs/` con esta bitácora, el registro de búsqueda y el estado del checklist. Los PDF de textos completos y el archivo `.rar` dejan de versionarse (`.gitignore`).
 5. **Sección 10, declaración de IA.** El texto propuesto nombra a Claude Opus 5.5. Debe reemplazarse por la herramienta y la versión que efectivamente se usaron (incluida la ayuda con el repositorio y los documentos), y por los autores reales de cada script.
+
+## D. Reemplazos en la selección de calibración (E2)
+
+Fecha: 2026-10-15. Regla aplicada: un artículo cuyo texto no se puede conseguir se reemplaza por el siguiente de la reserva, en orden (`data/calibracion/seleccion_calibracion_EDU.csv`).
+
+| Artículo sin acceso (orden en la selección) | DOI | Reemplazado por (reserva) | DOI |
+|---|---|---|---|
+| 12 | 10.1108/JPCC-09-2024-0166 | 21 | 10.1007/s10639-024-13003-4 |
+| 14 | 10.1080/14767724.2026.2673130 | 22 | 10.5209/rced.96906 |
+| 15 | 10.1080/00219266.2024.2420013 | 23 | 10.1186/s12909-025-07133-7 |
+| 19 | 10.1080/08841241.2022.2109093 | 24 | 10.1038/s41539-026-00405-x |
+
+El artículo 16 (10.51865/JESP.2026.1.20) se consiguió después y se mantiene. Cada reemplazo ocupa el mismo N.º de las planillas de codificación que el artículo al que reemplaza. `R/03_seleccion_calibracion_EDU.R` reproduce el sorteo original (antes de los reemplazos); la tabla vigente es el CSV. La reserva 25 y siguientes quedan sin usar.
+
+## E. Roles del equipo y hora de descarga
+
+Fecha: 2026-10-15. Cierra los puntos "roles E1" y "coordinador de datos" del protocolo (sección 1, hoy "por definir") y completa la hora del registro de búsqueda.
+
+| Integrante | Iniciales (A08) | Rol E1 | Responsabilidades | Roles CRediT iniciales |
+|---|---|---|---|---|
+| Martín Eduardo Soto Cabezas | MSC | **Coordinador de datos** | Descarga y exportación de las bases de WoS; integridad de la base; registro de búsqueda; mantiene el repositorio (Git) y ejecuta los scripts. Codifica. | Data curation; Software; Investigation |
+| Juan Pablo Maureira Sanhueza | JPM | **Coordinador de codificación y confiabilidad** (propuesto) | Calibración (E2): planillas, bitácora de desacuerdos y libro de códigos v2; cálculo de concordancia; documentación en `docs/`. Codifica. | Investigation; Validation; Formal analysis |
+
+Ambos son codificadores (la codificación de los componentes A y B es humana, sección 12 del enunciado) y comparten Writing – original draft y Writing – review & editing. Conceptualization y Methodology corresponden al equipo y al Dr. José Alejandro González Campos.
+
+**Hora de descarga.** Martín terminó de descargar las bases el 8 de octubre de 2026 a las 21:54 (hora de Chile). Esa hora queda en el registro de búsqueda como hora de la descarga.
+
+**Pendiente:** el rol de JPM es una propuesta redactada a partir del trabajo realizado; confirmarlo entre ambos. Copiar esta tabla a la sección 1 del documento del protocolo (Word de Martín).

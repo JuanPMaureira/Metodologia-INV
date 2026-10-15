@@ -5,8 +5,8 @@ Los campos marcados **PENDIENTE** solo se pueden completar desde WoS (pantalla d
 
 | Campo | Valor |
 |---|---|
-| Fecha y hora de ejecución de la búsqueda (hora de Chile) | **8 de octubre de 2026** (fecha informada por el equipo; todos los lotes se consideran descargados en la misma sesión). Hora: **PENDIENTE** (Martín, si la recuerda o la ve en el historial de WoS). |
-| Responsable | **PENDIENTE** (confirmar quién ejecutó la búsqueda y la exportación). |
+| Fecha y hora de ejecución de la búsqueda (hora de Chile) | **8 de octubre de 2026**, **21:54** (hora de Chile). Fecha informada por el equipo; todos los lotes se consideran descargados en la misma sesión. La hora es la del término de la descarga de los lotes, informada por JPM según lo que indicó Martín; la hora de ejecución de la consulta es anterior y puede verse en el historial de WoS. |
+| Responsable | Martín Eduardo Soto Cabezas (MSC), coordinador de datos: descargó y exportó los lotes. |
 | Consulta exacta ejecutada | **PENDIENTE** (copiar desde el historial de búsqueda de WoS). La consulta del protocolo es: `WC=("Education & Educational Research" OR "Education, Scientific Disciplines" OR "Education, Special" OR "Psychology, Educational") AND PY=(2025-2026) AND DT=(Article) AND LA=(English OR Spanish)` |
 | Ajustes de sintaxis respecto del enunciado | **PENDIENTE** (si no hubo ajustes, escribir "ninguno"). |
 | Filtros aplicados (ediciones) | SCIE, SSCI y ESCI. Consistente con los archivos: los 91.185 registros pertenecen a al menos una de las tres. |
