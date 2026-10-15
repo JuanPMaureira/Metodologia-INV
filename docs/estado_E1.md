@@ -4,7 +4,7 @@ Checklist de la sección 9 del protocolo, con corte al 2026-10-15.
 
 | Ítem | Estado | Qué falta |
 |---|---|---|
-| Protocolo completo, exportado a PDF (`docs/protocolo_E1.pdf`) | **Pendiente** | Los roles y el coordinador de datos ya están definidos en `docs/bitacora_decisiones.md` (sección E): falta copiarlos a la sección 1 del documento del protocolo; actualizar la sección 10 (declaración de IA); incorporar los cambios de `docs/bitacora_decisiones.md`; exportar a PDF. |
+| Protocolo completo, exportado a PDF (`docs/protocolo_E1.pdf`) | **Listo (v1.1)** | Versión 1.1 del 15-10-2026 (`docs/protocolo_E1.docx` y `.pdf`): roles, registro de búsqueda, nombres de lotes, repositorio, decisiones abiertas y declaración de IA al día. Falta confirmar con Martín las versiones de IA de la sección 10 y completar la consulta exacta cuando la tenga. |
 | Registro de búsqueda completo | **Parcial** | `docs/registro_busqueda_EDU.md` ya tiene la fecha (8 de octubre de 2026) y el N total (91.185). Hora (21:54, hora de Chile) y responsable (Martín) ya registrados. Falta lo que solo se ve en WoS: consulta exacta, ajustes de sintaxis y N por año de la pantalla. |
 | Universo exportado en `data/raw/wos_edu/` | **Listo** | 92 lotes, 91.185 registros únicos. |
 | Script de muestreo ejecutado sin errores desde cero | **Listo** | `R/01_muestreo_EDU.R` se ejecutó en Windows (Martín) y se volvió a ejecutar en Linux: misma lista, mismos conteos. |
