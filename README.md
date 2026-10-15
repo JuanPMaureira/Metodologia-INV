@@ -41,7 +41,7 @@ Los artículos se revisan en el orden de `posicion_estrato` dentro de cada año.
 
 ## Estado de la E1
 
-Ver [docs/estado_E1.md](docs/estado_E1.md). Cambios y decisiones: [docs/bitacora_decisiones.md](docs/bitacora_decisiones.md). Registro de búsqueda: [docs/registro_busqueda_EDU.md](docs/registro_busqueda_EDU.md).
+Índice de resultados por entrega: [docs/bitacora_etapas.md](docs/bitacora_etapas.md). Checklist de la E1: [docs/estado_E1.md](docs/estado_E1.md). Cambios y decisiones: [docs/bitacora_decisiones.md](docs/bitacora_decisiones.md). Registro de búsqueda: [docs/registro_busqueda_EDU.md](docs/registro_busqueda_EDU.md).
 
 ## Repositorio
 
