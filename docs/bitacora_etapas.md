@@ -10,7 +10,7 @@ Las entregas y sus semanas vienen de la sección 11 del enunciado.
 | Entrega | Semana | Peso | Estado |
 |---|---|---|---|
 | E1. Protocolo y muestra | 1 | 10 % | En curso: faltan el protocolo final y datos del registro de búsqueda |
-| E2. Calibración | 2 | 15 % | No iniciada |
+| E2. Calibración | 2 | 15 % | En curso: selección de los 20 artículos lista; falta la codificación independiente |
 | E3. Base componente A | 5 | 20 % | No iniciada (hay trabajo previo de descarga de textos) |
 | E4. Base componente B | 6 | 10 % | No iniciada |
 | E5. Informe de resultados | 8 | 20 % | No iniciada |
@@ -38,6 +38,7 @@ Contenido esperado: resultados de calibración, kappas, bitácora y libro de có
 
 | Resultado | Archivo | Estado | Última actualización |
 |---|---|---|---|
+| Selección de los 20 artículos de calibración (8 con declaración, 12 por sorteo, 18 de reserva) | `data/calibracion/seleccion_calibracion_EDU.csv`, `data/calibracion/con_declaracion_EDU.csv` y `R/03_seleccion_calibracion_EDU.R` | Listo. Los 8 con declaración se buscaron en las plataformas de las revistas (Frontiers y MDPI); los 12 del sorteo usan `set.seed(2026)` fuera de las posiciones ≤250 (2025) y ≤200 (2026) | 2026-10-15 |
 | Codificación independiente de 20 artículos (intraequipo) | Por crear | Pendiente | |
 | Kappas de calibración | Por crear | Pendiente | |
 | Libro de códigos v2 | Por crear | Pendiente | |
@@ -76,5 +77,6 @@ Contenido esperado: base completa y validada, submuestra de doble codificación 
 
 | Fecha | Cambio | Quién |
 |---|---|---|
+| 2026-10-15 | Se agrega la selección de los 20 artículos de calibración (E2) y su script. | JPM con Claude |
 | 2026-10-15 | Se crea esta bitácora. Se agregan fecha de búsqueda (8 oct) y N de WoS (91.185) al registro de búsqueda. | JPM con Claude |
 | 2026-10-14 | Se ajustan los nombres de archivos al protocolo, se amplía el script de muestreo y se crean README, registro de búsqueda y bitácora de decisiones. | JPM con Claude |
