@@ -38,6 +38,7 @@ Contenido esperado: resultados de calibración, kappas, bitácora y libro de có
 
 | Resultado | Archivo | Estado | Última actualización |
 |---|---|---|---|
+| Protocolo de la E2 (v1, con roles) | `docs/protocolo_E2.pdf`. La versión editable está en un documento de Claude ("Protocolo E2 — Área Educación (Calibración)") | Listo | 2026-10-15 |
 | Selección de los 20 artículos de calibración (8 con declaración, 12 por sorteo, 18 de reserva) | `data/calibracion/seleccion_calibracion_EDU.csv`, `data/calibracion/con_declaracion_EDU.csv` y `R/03_seleccion_calibracion_EDU.R` | Listo. Los 8 con declaración se buscaron en las plataformas de las revistas (Frontiers y MDPI); los 12 del sorteo usan `set.seed(2026)` fuera de las posiciones ≤250 (2025) y ≤200 (2026) | 2026-10-15 |
 | Codificación independiente de 20 artículos (intraequipo) | Por crear | Pendiente | |
 | Kappas de calibración | Por crear | Pendiente | |
@@ -77,6 +78,7 @@ Contenido esperado: base completa y validada, submuestra de doble codificación 
 
 | Fecha | Cambio | Quién |
 |---|---|---|
+| 2026-10-15 | Se agrega el protocolo de la E2 (`docs/protocolo_E2.pdf`) con los roles del equipo. | JPM con Claude |
 | 2026-10-15 | Protocolo actualizado a v1.1 y exportado a PDF (`docs/protocolo_E1.docx` y `.pdf`). | JPM con Claude |
 | 2026-10-15 | Se definen los roles del equipo (Martín: coordinador de datos) y se registran la hora de descarga (21:54) y el responsable en el registro de búsqueda. | JPM con Claude |
 | 2026-10-15 | Se agrega la selección de los 20 artículos de calibración (E2) y su script. | JPM con Claude |

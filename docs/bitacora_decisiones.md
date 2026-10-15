@@ -59,6 +59,8 @@ Fecha: 2026-10-15. Cierra los puntos "roles E1" y "coordinador de datos" del pro
 
 Ambos son codificadores (la codificación de los componentes A y B es humana, sección 12 del enunciado) y comparten Writing – original draft y Writing – review & editing. Conceptualization y Methodology corresponden al equipo y al Dr. José Alejandro González Campos.
 
+Los mismos roles rigen en la E2 (sección 1 del protocolo de la E2, `docs/protocolo_E2.pdf`).
+
 **Hora de descarga.** Martín terminó de descargar las bases el 8 de octubre de 2026 a las 21:54 (hora de Chile). Esa hora queda en el registro de búsqueda como hora de la descarga.
 
 **Pendiente:** el rol de JPM es una propuesta redactada a partir del trabajo realizado; confirmarlo entre ambos. Copiar esta tabla a la sección 1 del documento del protocolo (Word de Martín).
